@@ -6,21 +6,32 @@
     display: flex;
     justify-content: space-around;
     background-color: #f8f8f8;
-    padding: 25px;
+    padding: 10px;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
     z-index: 1000;
-  }
-  
-  .bottom-nav-bar .nav-button {
-    padding: 10px 20px;
+}
+
+.bottom-nav-bar .nav-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
     border: none;
     background-color: transparent;
     cursor: pointer;
-    font-size: 16px;
-    color: #333;
-  }
-  
-  .bottom-nav-bar .nav-button.active {
-    color: #007bff;
+    font-size: 12px;
+    color: #000000;
+    transition: all 0.3s ease;
+}
+
+.bottom-nav-bar .nav-button svg {
+    font-size: 20px;
+    margin-bottom:10px;
+}
+
+.bottom-nav-bar .nav-button.active {
     font-weight: bold;
-  }
+    background-color: rgba(0, 123, 255, 0.1);
+    border-radius: 25px;
+}
+

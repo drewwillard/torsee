@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '../styles/MainStreet.css'; // Keep using the same CSS file
 import torcMap from '../images/torc-map.png'; // Import the image
+import { getIconForSubcategory } from '../utils/categoryIcons';
 
 const getDayName = (dayNumber) => {
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -11,7 +12,7 @@ const formatTime = (time) => {
   return new Date(`1970-01-01T${time}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 };
 
-function HotSprings({ businesses }) {
+function HotSprings({ businesses, setSelectedBusinessId, setView, setBusinessView, handleViewBusinessDetails }) {
   const [selectedBusiness, setSelectedBusiness] = useState(null);
   const [popupStyle, setPopupStyle] = useState({});
   const mainStreetRef = useRef(null);
@@ -128,32 +129,35 @@ function HotSprings({ businesses }) {
         </div>
       </div>
       <div className="broadway-district-name district-name" ref={districtNameRef}>Hot Springs</div>
-      {businesses.map((business, index) => (
-        <div
-          key={index}
-          data-index={index}
-          className={`business position-${business.x} category-${business.category_id || 'unknown'}`}
-          onClick={(e) => handleInteraction({...business, index}, e)}
-          onTouchStart={(e) => handleInteraction({...business, index}, e)}
-        >
-          {business.Name ? business.Name[0] : ''}
-        </div>
-      ))}
+      {businesses.map((business, index) => {
+        const IconComponent = getIconForSubcategory(business.business_categories[0]?.sub_categories.id);
+        return (
+          <div
+            key={index}
+            data-index={index}
+            className={`business position-${business.x} category-${business.category_id || 'unknown'}`}
+            onClick={(e) => handleInteraction({...business, index}, e)}
+            onTouchStart={(e) => handleInteraction({...business, index}, e)}
+          >
+            <IconComponent />
+          </div>
+        );
+      })}
       {selectedBusiness && (
         <div 
           className="popup"
           style={popupStyle}
         >
           <h3>{selectedBusiness.Name}</h3>
-          <p>{selectedBusiness.description || 'No description available.'}</p>
-          <h4>Hours of Operation:</h4>
-          <ul>
-            {selectedBusiness.business_hours.map((hours, index) => (
-              <li key={index}>
-                {getDayName(hours.day_of_week)}: {formatTime(hours.open_time)} - {formatTime(hours.close_time)}
-              </li>
-            ))}
-          </ul>
+          <p className="business-subcategory">
+            {selectedBusiness.business_categories[0]?.sub_categories.name || 'Uncategorized'}
+          </p>
+          <button 
+            className="more-info-button"
+            onClick={() => handleViewBusinessDetails(selectedBusiness.id)}
+          >
+            More Info
+          </button>
         </div>
       )}
     </div>

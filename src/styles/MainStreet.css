@@ -147,7 +147,7 @@
     text-transform: uppercase;
     letter-spacing: 0.2em;
     padding: 10px 20px 10px 100px; /* Adjusted padding */
-    transition: none, smooth; /* Remove transition for instant updates */
+    transition: all 0.2s ease; /* Fast and smooth transition for mobile devices */
   }
 
   .torc-map-container {
@@ -193,18 +193,52 @@
 }
 
   .main-street-marker {
-    top: 32%; /* Adjust as needed */
-    left: 50%; /* Adjust as needed */
+    top: 37%; /* Adjust as needed */
+    left: 65%; /* Adjust as needed */
     transform: translate(-50%, -50%);
+    transform: rotate(25deg);
   }
   .broadway-marker {
     top: 65%; /* Adjust as needed */
-    left: 50%; /* Adjust as needed */
+    left: 35%; /* Adjust as needed */
     transform: translate(-50%, -50%);
   }
 
   .hot-springs-marker {
     top: 85%; /* Adjust as needed */
-    left: 50%; /* Adjust as needed */
+    left: 75%; /* Adjust as needed */
     transform: translate(-50%, -50%);
   }
+
+  .business svg {
+    width: 24px;
+    height: 24px;
+    color: white;
+  }
+
+.more-info-button {
+  padding: 10px 2px;
+  font-size: 12px;
+  background-color: #71c7fd;
+  color: #000000;
+  border: 0;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Avant Garde', sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.more-info-button:hover {
+  background-color: #25a4f9;
+}
+
+.business-subcategory {
+  font-size: 0.9em;
+  color: #666;
+  margin: -5px 0 10px 0;
+}

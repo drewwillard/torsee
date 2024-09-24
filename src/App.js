@@ -55,16 +55,18 @@ function App() {
                   name
                 )
               )
-            )
+            ),
+            events (id)
           `)
-          .order('y', { ascending: true }); // Order by 'y' value
+          .order('y', { ascending: true });
 
         if (error) throw error;
 
-        // Process the data to add category_id to each business
+        // Process the data to add category_id and hasEvents to each business
         const processedData = data.map(business => ({
           ...business,
-          category_id: business.business_categories[0]?.sub_categories.category_id
+          category_id: business.business_categories[0]?.sub_categories.category_id,
+          hasEvents: business.events && business.events.length > 0
         }));
 
         setBusinesses(processedData);
@@ -89,7 +91,7 @@ function App() {
   return (
     <div className="app-container">
       <div className="collection-heading">
-        <h1 className="main-heading">T or See</h1>
+        <h1 className="main-heading">T OR SEE</h1>
         <p className="text-center">See Truth or Consequences</p>
         <button className="search-button"></button>
       </div>
@@ -121,17 +123,29 @@ function App() {
             <>
               {mainStreetBusinesses.length > 0 && (
                 <MainStreet 
-                  businesses={mainStreetBusinesses.filter(b => selectedCategory === 'all' || b.category_id === parseInt(selectedCategory))} 
+                  businesses={mainStreetBusinesses.filter(b => selectedCategory === 'all' || b.category_id === parseInt(selectedCategory))}
+                  setSelectedBusinessId={setSelectedBusinessId}
+                  setView={setView}
+                  setBusinessView={setBusinessView}
+                  handleViewBusinessDetails={handleViewBusinessDetails}
                 />
               )}
               {broadwayStreetBusinesses.length > 0 && (
                 <BroadwayStreet 
-                  businesses={broadwayStreetBusinesses.filter(b => selectedCategory === 'all' || b.category_id === parseInt(selectedCategory))} 
+                  businesses={broadwayStreetBusinesses.filter(b => selectedCategory === 'all' || b.category_id === parseInt(selectedCategory))}
+                  setSelectedBusinessId={setSelectedBusinessId}
+                  setView={setView}
+                  setBusinessView={setBusinessView}
+                  handleViewBusinessDetails={handleViewBusinessDetails}
                 />
               )}
               {hotSpringsBusinesses.length > 0 && (
                 <HotSprings 
-                  businesses={hotSpringsBusinesses.filter(b => selectedCategory === 'all' || b.category_id === parseInt(selectedCategory))} 
+                  businesses={hotSpringsBusinesses.filter(b => selectedCategory === 'all' || b.category_id === parseInt(selectedCategory))}
+                  setSelectedBusinessId={setSelectedBusinessId}
+                  setView={setView}
+                  setBusinessView={setBusinessView}
+                  handleViewBusinessDetails={handleViewBusinessDetails}
                 />
               )}
             </>
@@ -142,6 +156,7 @@ function App() {
               setIsViewingBusinessDetails={setIsViewingBusinessDetails}
               setSelectedBusinessId={setSelectedBusinessId}
               handleViewBusinessDetails={handleViewBusinessDetails}
+              setView={setView}
             />
           )}
         </>
@@ -150,7 +165,7 @@ function App() {
       {view === 'events' && <EventsView events={events} onViewBusinessDetails={handleViewBusinessDetails} />}
       {view === 'contact' && <ContactView />}
 
-      <BottomNavBar view={view} setView={setView} />
+      <BottomNavBar setView={setView} currentView={view} />
     </div>
   );
 }

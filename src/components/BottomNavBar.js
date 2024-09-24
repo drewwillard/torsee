@@ -1,27 +1,31 @@
 import React from 'react';
 import '../styles/BottomNavBar.css';
+import { FaMapMarkerAlt, FaCalendarAlt, FaEnvelope } from 'react-icons/fa';
 
-function BottomNavBar({ view, setView }) {
+function BottomNavBar({ setView, currentView }) {
   return (
     <div className="bottom-nav-bar">
       
       <button 
-        className={`nav-button ${view === 'events' ? 'active' : ''}`}
+        className={`nav-button ${currentView === 'events' ? 'active' : ''}`}
         onClick={() => setView('events')}
       >
-        Events
+        <FaCalendarAlt />
+        <span>Events</span>
       </button>
       <button 
-        className={`nav-button ${view === 'businesses' ? 'active' : ''}`}
+        className={`nav-button ${currentView === 'businesses' ? 'active' : ''}`}
         onClick={() => setView('businesses')}
       >
-        Businesses
+        <FaMapMarkerAlt />
+        <span>Locations</span>
       </button>
       <button 
-        className={`nav-button ${view === 'contact' ? 'active' : ''}`}
+        className={`nav-button ${currentView === 'contact' ? 'active' : ''}`}
         onClick={() => setView('contact')}
       >
-        Contact
+        <FaEnvelope />
+        <span>Contact</span>
       </button>
     </div>
   );

@@ -59,3 +59,22 @@
 .time {
     color: #777;
 }
+
+.view-events-button {
+    padding: 10px;
+    font-size: 14px;
+    background-color: #71c7fd;
+    color: #000000;
+    border: 0;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Avant Garde', sans-serif;
+    font-weight: bold;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.view-events-button:hover {
+    background-color: #25a4f9;
+}
