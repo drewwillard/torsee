@@ -18,9 +18,18 @@ function App() {
   const [businessView, setBusinessView] = useState('map');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [events, setEvents] = useState([]);
+  const [selectedBusinessId, setSelectedBusinessId] = useState(null);
+  const [isViewingBusinessDetails, setIsViewingBusinessDetails] = useState(false);
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
+  };
+
+  const handleViewBusinessDetails = (businessId) => {
+    setSelectedBusinessId(businessId);
+    setIsViewingBusinessDetails(true);
+    setView('businesses');
+    setBusinessView('list');
   };
 
   useEffect(() => {
@@ -64,17 +73,6 @@ function App() {
         setError(error.message);
       } finally {
         setIsLoading(false);
-      }
-
-      // Fetch events
-      const { data: eventsData, error: eventsError } = await supabase
-        .from('events')
-        .select('*');
-
-      if (eventsError) {
-        console.error('Error fetching events:', eventsError);
-      } else {
-        setEvents(eventsData);
       }
     }
 
@@ -121,7 +119,6 @@ function App() {
 
           {businessView === 'map' ? (
             <>
-              <div className="road"></div>
               {mainStreetBusinesses.length > 0 && (
                 <MainStreet 
                   businesses={mainStreetBusinesses.filter(b => selectedCategory === 'all' || b.category_id === parseInt(selectedCategory))} 
@@ -140,13 +137,17 @@ function App() {
             </>
           ) : (
             <ListView 
-              businesses={businesses.filter(b => selectedCategory === 'all' || b.category_id === parseInt(selectedCategory))} 
+              businesses={businesses.filter(b => selectedCategory === 'all' || b.category_id === parseInt(selectedCategory))}
+              selectedBusinessId={isViewingBusinessDetails ? selectedBusinessId : null}
+              setIsViewingBusinessDetails={setIsViewingBusinessDetails}
+              setSelectedBusinessId={setSelectedBusinessId}
+              handleViewBusinessDetails={handleViewBusinessDetails}
             />
           )}
         </>
       )}
 
-      {view === 'events' && <EventsView events={events} />}
+      {view === 'events' && <EventsView events={events} onViewBusinessDetails={handleViewBusinessDetails} />}
       {view === 'contact' && <ContactView />}
 
       <BottomNavBar view={view} setView={setView} />

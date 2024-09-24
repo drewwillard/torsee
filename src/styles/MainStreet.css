@@ -1,19 +1,26 @@
-.main-street {
-    width: 94%;
+.main-street,
+.broadway-street,
+.hot-springs {
     max-width: 600px;
-    min-height: 35vh;
+    width: 94%;
     margin: 0 auto;
-    margin-top: 60px;
     padding: 20px;
-    padding-top: 100px;
     background-color: #ffffff;
     border-radius: 25px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    position: relative; /* Ensure this is set for absolute positioning of child elements */
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 5px;
+    box-sizing: border-box;
+    overflow: visible;
+}
+
+.main-street {
+    min-height: 35vh;
+    margin-top: 60px;
+    padding-top: 100px;
     box-sizing: border-box;
     overflow: visible; /* Change this to allow the text to be visible outside */
   }
@@ -147,8 +154,6 @@
     position: absolute;
     width: 0%;
     height: 0%;
-    top: -5px;
-    left: 50%;
     transform: translateX(-50%);
     z-index: 10;
     filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.3));
@@ -161,7 +166,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     display: inline-block;
     position: absolute; /* Ensure it is positioned absolutely */
-    top: 50%; /* Center vertically */
+    top: -100px; /* Move the map up by 50px */
     left: 50%; /* Center horizontally */
     transform: translate(-50%, -50%); /* Adjust for the element's own size */
 }
@@ -174,6 +179,7 @@
   .torc-map {
     max-width: 200px;
     left: 50%;
+    top: 50%;
     height: auto;
     clip-path: polygon(0 5px, 100% 5px, 100% 100%, 0 100%);
   }

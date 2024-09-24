@@ -120,6 +120,7 @@ function MainStreet({ businesses }) {
 
   return (
     <div className="main-street" ref={mainStreetRef}>
+      <div className="road"></div>
       <div className="torc-map-container">
         <div className="map-wrapper map-box">
           <img src={torcMap} alt="Torc Map" className="torc-map" />

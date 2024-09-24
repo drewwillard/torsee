@@ -2,19 +2,38 @@ import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar'; // You'll need to install this package
 import 'react-calendar/dist/Calendar.css'; // And import its CSS
 import '../styles/EventsView.css';  // Add this line
+import { supabase } from '../supabaseClient'; // Add this import
 
-function EventsView({ events }) {
+function EventsView({ events, onViewBusinessDetails, setSelectedBusinessId }) {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [showCalendar, setShowCalendar] = useState(false);
   const [upcomingEvents, setUpcomingEvents] = useState([]);
 
   useEffect(() => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const filteredEvents = events.filter(event => new Date(event.date) >= today);
-    filteredEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
-    setUpcomingEvents(filteredEvents);
-  }, [events]);
+    const fetchEvents = async () => {
+      const { data: eventsData, error } = await supabase
+        .from('events')
+        .select(`
+          *,
+          businesses (
+            id,
+            Name
+          )
+        `)
+        .order('date');
+
+      if (error) {
+        console.error('Error fetching events:', error);
+      } else {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const filteredEvents = eventsData.filter(event => new Date(event.date) >= today);
+        setUpcomingEvents(filteredEvents);
+      }
+    };
+
+    fetchEvents();
+  }, []);
 
   const handleDateChange = (newDate) => {
     setSelectedDate(newDate);
@@ -38,6 +57,11 @@ function EventsView({ events }) {
   };
 
   const groupedEvents = groupEventsByDate(upcomingEvents);
+
+  const formatTime = (time) => {
+    const date = new Date(`1970-01-01T${time}`);
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+  };
 
   return (
     <div className="events-view">
@@ -64,8 +88,17 @@ function EventsView({ events }) {
             {dateEvents.map((event, index) => (
               <div key={index} className="event-item">
                 <h4>{event.name}</h4>
+                <p>{event.businesses ? event.businesses.Name : 'TBA'}</p>
+                <p>{formatTime(event.time)}</p>
                 <p>{event.description}</p>
-                <p>Time: {event.time}</p>
+                {event.businesses && (
+                  <button 
+                    className="location-info-button"
+                    onClick={() => onViewBusinessDetails(event.businesses.id)}
+                  >
+                    Location Info
+                  </button>
+                )}
               </div>
             ))}
           </div>
