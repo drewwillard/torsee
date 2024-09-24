@@ -1,0 +1,61 @@
+.list-view {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.business-box {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.business-box:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.business-name {
+    font-size: 1.4em;
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.business-description {
+    font-size: 1em;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.hours-heading {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    color: #444;
+}
+
+.hours-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.hours-list li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.day {
+    font-weight: bold;
+    color: #555;
+}
+
+.time {
+    color: #777;
+}

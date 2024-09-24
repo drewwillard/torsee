@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "https://torsee.com",
+  "proxy": "http://localhost:5001",
   "scripts": {
     "start": "PORT=3001 react-scripts start",
     "build": "react-scripts build",
@@ -12,11 +13,13 @@
     "dev": "concurrently \"npm run server\" \"npm start\""
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.45.4",
     "cors": "^2.8.5",
     "express": "^4.21.0",
-    "react-scripts": "^5.0.1",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-calendar": "^5.0.0",
+    "react-dom": "^18.3.1",
+    "react-scripts": "^5.0.1"
   },
   "devDependencies": {
     "concurrently": "^9.0.1",

@@ -1,0 +1,204 @@
+.main-street {
+    width: 94%;
+    max-width: 600px;
+    min-height: 35vh;
+    margin: 0 auto;
+    margin-top: 60px;
+    padding: 20px;
+    padding-top: 100px;
+    background-color: #ffffff;
+    border-radius: 25px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative; /* Ensure this is set for absolute positioning of child elements */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    box-sizing: border-box;
+    overflow: visible; /* Change this to allow the text to be visible outside */
+  }
+  
+  .business {
+    width: 50px;
+    height: 50px;
+    background-color: #1f4720;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+    transition: transform 0.2s ease;
+    position: relative;
+  }
+
+  .business.category-1 { background-color: #FF6B6B; }
+  .business.category-2 { background-color: #4ECDC4; }
+  .business.category-3 { background-color: #45B7D1; }
+  .business.category-4 { background-color: #FFA07A; }
+  .business.category-5 { background-color: #98D8C8; }
+  .business.category-6 { background-color: #F7DC6F; }
+  .business.category-unknown { background-color: #CCCCCC; }
+
+  .business.position-0 { left: -40%; }
+  .business.position-1 { left: -20%; }
+  .business.position-2 { left: 0; }
+  .business.position-3 { left: 20%; }
+  .business.position-4 { left: 40%; }
+
+  .business:click {
+    min-width: 100px;
+  }
+  
+  .popup {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+    width: 200px; /* Should match popupWidth in calculatePopupPosition */
+    max-width: calc(100% - 20px); /* Ensure it doesn't overflow on very small screens */
+    box-sizing: border-box;
+  }
+
+  .popup h3 {
+    margin-top: 0;
+    font-size: 1.2em;
+  }
+
+  .popup p {
+    font-size: 1em;
+  }
+
+  /* Add a little triangle at the bottom of the popup */
+  /* .popup::after {
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 8px;
+  } */
+
+  /* Triangle for popup above the business */
+  /* .popup[style*="translate(-50%)"]::after {
+    top: 100%;
+    left: 50%;
+    border-color: white transparent transparent transparent;
+    transform: translateX(-50%);
+  } */
+
+  /* Triangle for popup below the business */
+  /* .popup[style*="translate(-50%, 0)"]::after {
+    bottom: 100%;
+    left: 50%;
+    border-color: transparent transparent white transparent;
+    transform: translateX(-50%);
+  } */
+
+  /* Add more styles for roads, landmarks, etc. */
+
+  @media (min-width: 768px) {
+    .business {
+      width: 60px;
+      height: 60px;
+    }
+
+    .popup {
+      width: 350px;
+    }
+
+    .popup h3 {
+      font-size: 1.4em;
+    }
+
+    .popup p {
+      font-size: 1.1em;
+    }
+  }
+
+  @media (hover: hover) {
+    .business:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  .district-name {
+    position: absolute;
+    top: 100px; /* Adjust this value to position it below the map */
+    left: 50%; /* Adjust this to move it to the left edge */
+    transform-origin: center;
+    transform: translate(-50%, -50%) rotate(90deg);
+    font-size: 1rem;
+    font-family: 'Arial', sans-serif;
+    color: rgba(255, 255, 255, 0.894);
+    white-space: nowrap;
+    pointer-events: none; /* Ensures it doesn't interfere with clicking on businesses */
+    z-index: 10; /* Place it above businesses but below popups */
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    padding: 10px 20px 10px 100px; /* Adjusted padding */
+    transition: none, smooth; /* Remove transition for instant updates */
+  }
+
+  .torc-map-container {
+    position: absolute;
+    width: 0%;
+    height: 0%;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.3));
+  }
+  .map-box {
+    background-color: white;
+    margin: 25px auto;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    position: absolute; /* Ensure it is positioned absolutely */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust for the element's own size */
+}
+
+  .map-wrapper {
+    position: relative; /* Ensure the wrapper is relatively positioned */
+    display: inline-block;
+  }
+
+  .torc-map {
+    max-width: 200px;
+    left: 50%;
+    height: auto;
+    clip-path: polygon(0 5px, 100% 5px, 100% 100%, 0 100%);
+  }
+
+  .map-marker {
+    position: absolute;
+    font-family: 'Arial', sans-serif;
+    color: rgb(0, 0, 0);
+    font-size: 24px;
+    font-weight: bold;
+}
+
+  .main-street-marker {
+    top: 32%; /* Adjust as needed */
+    left: 50%; /* Adjust as needed */
+    transform: translate(-50%, -50%);
+  }
+  .broadway-marker {
+    top: 65%; /* Adjust as needed */
+    left: 50%; /* Adjust as needed */
+    transform: translate(-50%, -50%);
+  }
+
+  .hot-springs-marker {
+    top: 85%; /* Adjust as needed */
+    left: 50%; /* Adjust as needed */
+    transform: translate(-50%, -50%);
+  }
